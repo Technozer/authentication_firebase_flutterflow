@@ -9,7 +9,7 @@ import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/internationalization.dart';
 import 'package:authentication_demo/login_sign_up_screen/login_sign_up_screen_widget.dart';
-import 'package:authentication_demo/logged_in_page/logged_in_page_widget.dart';
+import 'package:authentication_demo/todo_add_screen/todo_add_screen_widget.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() async {
@@ -87,7 +87,7 @@ class _MyAppState extends State<MyApp> {
               ),
             )
           : currentUser.loggedIn
-              ? LoggedInPageWidget()
+              ? TodoAddScreenWidget()
               : LoginSignUpScreenWidget(),
     );
   }

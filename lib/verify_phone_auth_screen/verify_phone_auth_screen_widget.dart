@@ -2,7 +2,7 @@ import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../logged_in_page/logged_in_page_widget.dart';
+import '../todo_add_screen/todo_add_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -48,7 +48,7 @@ class _VerifyPhoneAuthScreenWidgetState
           type: PageTransitionType.leftToRight,
           duration: Duration(milliseconds: 200),
           reverseDuration: Duration(milliseconds: 200),
-          child: LoggedInPageWidget(),
+          child: TodoAddScreenWidget(),
         ),
         (r) => false,
       );
@@ -136,7 +136,7 @@ class _VerifyPhoneAuthScreenWidgetState
                       type: PageTransitionType.leftToRight,
                       duration: Duration(milliseconds: 200),
                       reverseDuration: Duration(milliseconds: 200),
-                      child: LoggedInPageWidget(),
+                      child: TodoAddScreenWidget(),
                     ),
                     (r) => false,
                   );

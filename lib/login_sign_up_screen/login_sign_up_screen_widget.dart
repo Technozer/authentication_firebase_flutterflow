@@ -3,9 +3,9 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../forgot_password_screen/forgot_password_screen_widget.dart';
-import '../logged_in_page/logged_in_page_widget.dart';
 import '../phone_auth_page/phone_auth_page_widget.dart';
 import '../sign_up_page/sign_up_page_widget.dart';
+import '../todo_add_screen/todo_add_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -303,7 +303,7 @@ class _LoginSignUpScreenWidgetState extends State<LoginSignUpScreenWidget> {
                                   type: PageTransitionType.leftToRight,
                                   duration: Duration(milliseconds: 200),
                                   reverseDuration: Duration(milliseconds: 200),
-                                  child: LoggedInPageWidget(),
+                                  child: TodoAddScreenWidget(),
                                 ),
                                 (r) => false,
                               );
@@ -410,7 +410,7 @@ class _LoginSignUpScreenWidgetState extends State<LoginSignUpScreenWidget> {
                                       duration: Duration(milliseconds: 200),
                                       reverseDuration:
                                           Duration(milliseconds: 200),
-                                      child: LoggedInPageWidget(),
+                                      child: TodoAddScreenWidget(),
                                     ),
                                     (r) => false,
                                   );
@@ -440,7 +440,7 @@ class _LoginSignUpScreenWidgetState extends State<LoginSignUpScreenWidget> {
                                                 Duration(milliseconds: 200),
                                             reverseDuration:
                                                 Duration(milliseconds: 200),
-                                            child: LoggedInPageWidget(),
+                                            child: TodoAddScreenWidget(),
                                           ),
                                           (r) => false,
                                         );
@@ -476,7 +476,7 @@ class _LoginSignUpScreenWidgetState extends State<LoginSignUpScreenWidget> {
                                         duration: Duration(milliseconds: 200),
                                         reverseDuration:
                                             Duration(milliseconds: 200),
-                                        child: LoggedInPageWidget(),
+                                        child: TodoAddScreenWidget(),
                                       ),
                                       (r) => false,
                                     );
@@ -506,7 +506,7 @@ class _LoginSignUpScreenWidgetState extends State<LoginSignUpScreenWidget> {
                                                   Duration(milliseconds: 200),
                                               reverseDuration:
                                                   Duration(milliseconds: 200),
-                                              child: LoggedInPageWidget(),
+                                              child: TodoAddScreenWidget(),
                                             ),
                                             (r) => false,
                                           );

@@ -16,25 +16,27 @@ class SignUpPageWidget extends StatefulWidget {
 }
 
 class _SignUpPageWidgetState extends State<SignUpPageWidget> {
-  TextEditingController confirmPasswordTextController;
-  bool passwordVisibility2;
-  TextEditingController emailTextController;
-  TextEditingController textController1;
-  TextEditingController textController2;
-  TextEditingController passwordTextController;
-  bool passwordVisibility1;
+  TextEditingController ageController;
+  TextEditingController nameController;
+  TextEditingController emailController;
+  TextEditingController phoneController;
+  TextEditingController passwordController;
+  bool passwordVisibility;
+  TextEditingController confirmPassController;
+  bool confirmPassVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    confirmPasswordTextController = TextEditingController();
-    passwordVisibility2 = false;
-    emailTextController = TextEditingController();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    passwordTextController = TextEditingController();
-    passwordVisibility1 = false;
+    ageController = TextEditingController();
+    nameController = TextEditingController();
+    emailController = TextEditingController();
+    phoneController = TextEditingController();
+    passwordController = TextEditingController();
+    passwordVisibility = false;
+    confirmPassController = TextEditingController();
+    confirmPassVisibility = false;
   }
 
   @override
@@ -66,7 +68,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                 child: TextFormField(
-                  controller: emailTextController,
+                  controller: nameController,
                   obscureText: false,
                   decoration: InputDecoration(
                     hintText: 'Name',
@@ -99,7 +101,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                 child: TextFormField(
-                  controller: textController1,
+                  controller: ageController,
                   obscureText: false,
                   decoration: InputDecoration(
                     hintText: 'Age',
@@ -132,7 +134,7 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                 child: TextFormField(
-                  controller: textController2,
+                  controller: emailController,
                   obscureText: false,
                   decoration: InputDecoration(
                     hintText: 'Email',
@@ -166,8 +168,41 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                 child: TextFormField(
-                  controller: passwordTextController,
-                  obscureText: !passwordVisibility1,
+                  controller: phoneController,
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    hintText: 'Phone number',
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(4.0),
+                        topRight: Radius.circular(4.0),
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(4.0),
+                        topRight: Radius.circular(4.0),
+                      ),
+                    ),
+                    contentPadding:
+                        EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                  ),
+                  style: FlutterFlowTheme.of(context).bodyText1,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                child: TextFormField(
+                  controller: passwordController,
+                  obscureText: !passwordVisibility,
                   decoration: InputDecoration(
                     hintText: 'Password',
                     enabledBorder: UnderlineInputBorder(
@@ -194,10 +229,10 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                         EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                     suffixIcon: InkWell(
                       onTap: () => setState(
-                        () => passwordVisibility1 = !passwordVisibility1,
+                        () => passwordVisibility = !passwordVisibility,
                       ),
                       child: Icon(
-                        passwordVisibility1
+                        passwordVisibility
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
                         color: Color(0xFF757575),
@@ -212,8 +247,8 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                 child: TextFormField(
-                  controller: confirmPasswordTextController,
-                  obscureText: !passwordVisibility2,
+                  controller: confirmPassController,
+                  obscureText: !confirmPassVisibility,
                   decoration: InputDecoration(
                     hintText: 'Re-password',
                     enabledBorder: UnderlineInputBorder(
@@ -240,10 +275,10 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                         EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                     suffixIcon: InkWell(
                       onTap: () => setState(
-                        () => passwordVisibility2 = !passwordVisibility2,
+                        () => confirmPassVisibility = !confirmPassVisibility,
                       ),
                       child: Icon(
-                        passwordVisibility2
+                        confirmPassVisibility
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
                         color: Color(0xFF757575),
@@ -263,8 +298,8 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        if (passwordTextController.text !=
-                            confirmPasswordTextController.text) {
+                        if (passwordController.text !=
+                            confirmPassController.text) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
@@ -277,16 +312,17 @@ class _SignUpPageWidgetState extends State<SignUpPageWidget> {
 
                         final user = await createAccountWithEmail(
                           context,
-                          emailTextController.text,
-                          passwordTextController.text,
+                          emailController.text,
+                          passwordController.text,
                         );
                         if (user == null) {
                           return;
                         }
 
                         final usersCreateData = createUsersRecordData(
-                          displayName: emailTextController.text,
-                          age: int.parse(textController1.text),
+                          displayName: nameController.text,
+                          age: int.parse(ageController.text),
+                          phoneNumber: phoneController.text,
                         );
                         await UsersRecord.collection
                             .doc(user.uid)

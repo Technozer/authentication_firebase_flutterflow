@@ -22,9 +22,15 @@ class _UserDetailScreenWidgetState extends State<UserDetailScreenWidget> {
   String uploadedFileUrl = '';
   TextEditingController textController1;
   TextEditingController emailAddressController;
-  TextEditingController myBioController1;
-  TextEditingController myBioController2;
+  TextEditingController ageController;
+  TextEditingController phoneController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    emailAddressController = TextEditingController(text: currentUserEmail);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +150,7 @@ class _UserDetailScreenWidgetState extends State<UserDetailScreenWidget> {
                               shape: BoxShape.circle,
                             ),
                             child: Image.network(
-                              'https://images.unsplash.com/photo-1536164261511-3a17e671d380?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=630&q=80',
+                              userDetailScreenUsersRecord.photoUrl,
                               fit: BoxFit.fitWidth,
                             ),
                           ),
@@ -166,6 +172,7 @@ class _UserDetailScreenWidgetState extends State<UserDetailScreenWidget> {
                     ),
                     obscureText: false,
                     decoration: InputDecoration(
+                      labelText: 'Full Name',
                       labelStyle:
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Lexend Deca',
@@ -173,6 +180,7 @@ class _UserDetailScreenWidgetState extends State<UserDetailScreenWidget> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal,
                               ),
+                      hintText: 'Your full name...',
                       hintStyle:
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Lexend Deca',
@@ -215,12 +223,10 @@ class _UserDetailScreenWidgetState extends State<UserDetailScreenWidget> {
                       Duration(milliseconds: 2000),
                       () => setState(() {}),
                     ),
-                    controller: emailAddressController ??=
-                        TextEditingController(
-                      text: userDetailScreenUsersRecord.email,
-                    ),
+                    controller: emailAddressController,
                     obscureText: false,
                     decoration: InputDecoration(
+                      labelText: 'Email Address',
                       labelStyle:
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Lexend Deca',
@@ -228,6 +234,7 @@ class _UserDetailScreenWidgetState extends State<UserDetailScreenWidget> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal,
                               ),
+                      hintText: 'Your email..',
                       hintStyle:
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Lexend Deca',
@@ -266,15 +273,16 @@ class _UserDetailScreenWidgetState extends State<UserDetailScreenWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 12),
                   child: TextFormField(
                     onChanged: (_) => EasyDebounce.debounce(
-                      'myBioController1',
+                      'ageController',
                       Duration(milliseconds: 2000),
                       () => setState(() {}),
                     ),
-                    controller: myBioController1 ??= TextEditingController(
+                    controller: ageController ??= TextEditingController(
                       text: userDetailScreenUsersRecord.age.toString(),
                     ),
                     obscureText: false,
                     decoration: InputDecoration(
+                      labelText: 'Bio',
                       labelStyle:
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Lexend Deca',
@@ -282,6 +290,7 @@ class _UserDetailScreenWidgetState extends State<UserDetailScreenWidget> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal,
                               ),
+                      hintText: 'A little about you...',
                       hintStyle:
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Lexend Deca',
@@ -322,15 +331,16 @@ class _UserDetailScreenWidgetState extends State<UserDetailScreenWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 12),
                   child: TextFormField(
                     onChanged: (_) => EasyDebounce.debounce(
-                      'myBioController2',
+                      'phoneController',
                       Duration(milliseconds: 2000),
                       () => setState(() {}),
                     ),
-                    controller: myBioController2 ??= TextEditingController(
+                    controller: phoneController ??= TextEditingController(
                       text: userDetailScreenUsersRecord.phoneNumber,
                     ),
                     obscureText: false,
                     decoration: InputDecoration(
+                      labelText: 'Bio',
                       labelStyle:
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Lexend Deca',
@@ -338,6 +348,7 @@ class _UserDetailScreenWidgetState extends State<UserDetailScreenWidget> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.normal,
                               ),
+                      hintText: 'A little about you...',
                       hintStyle:
                           FlutterFlowTheme.of(context).bodyText1.override(
                                 fontFamily: 'Lexend Deca',
