@@ -3,7 +3,6 @@ import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../todo_add_screen/todo_add_screen_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -19,15 +18,15 @@ class LoggedInPageWidget extends StatefulWidget {
 
 class _LoggedInPageWidgetState extends State<LoggedInPageWidget> {
   DateTime datePicked;
-  TextEditingController textController1;
-  TextEditingController textController2;
+  TextEditingController descriptionController;
+  TextEditingController titleController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
+    descriptionController = TextEditingController();
+    titleController = TextEditingController();
   }
 
   @override
@@ -60,7 +59,7 @@ class _LoggedInPageWidgetState extends State<LoggedInPageWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                 child: TextFormField(
-                  controller: textController1,
+                  controller: titleController,
                   obscureText: false,
                   decoration: InputDecoration(
                     hintText: 'title',
@@ -88,7 +87,7 @@ class _LoggedInPageWidgetState extends State<LoggedInPageWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                 child: TextFormField(
-                  controller: textController2,
+                  controller: descriptionController,
                   obscureText: false,
                   decoration: InputDecoration(
                     hintText: 'Description..',
@@ -116,7 +115,7 @@ class _LoggedInPageWidgetState extends State<LoggedInPageWidget> {
               ),
               InkWell(
                 onTap: () async {
-                  await DatePicker.showDatePicker(
+                  await DatePicker.showDateTimePicker(
                     context,
                     showTitleActions: true,
                     onConfirm: (date) {
@@ -128,18 +127,15 @@ class _LoggedInPageWidgetState extends State<LoggedInPageWidget> {
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Date Picker ==>',
+                      'Date  :  ',
                       style: FlutterFlowTheme.of(context).bodyText1,
                     ),
-                    Align(
-                      alignment: AlignmentDirectional(-0.2, 0),
-                      child: Text(
-                        dateTimeFormat('d/M/y', datePicked),
-                        style: FlutterFlowTheme.of(context).bodyText1,
-                      ),
+                    Text(
+                      dateTimeFormat('MMMMEEEEd', datePicked),
+                      style: FlutterFlowTheme.of(context).bodyText1,
                     ),
                   ],
                 ),
@@ -152,21 +148,13 @@ class _LoggedInPageWidgetState extends State<LoggedInPageWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        final todosCreateData = createTodosRecordData(
-                          title: textController1.text,
-                          description: textController2.text,
+                        final todoCreateData = createTodoRecordData(
+                          title: titleController.text,
+                          descreption: descriptionController.text,
                           date: datePicked,
                         );
-                        await TodosRecord.collection.doc().set(todosCreateData);
-                        await Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.leftToRight,
-                            duration: Duration(milliseconds: 100),
-                            reverseDuration: Duration(milliseconds: 100),
-                            child: TodoAddScreenWidget(),
-                          ),
-                        );
+                        await TodoRecord.collection.doc().set(todoCreateData);
+                        Navigator.pop(context);
                       },
                       text: 'Add',
                       options: FFButtonOptions(

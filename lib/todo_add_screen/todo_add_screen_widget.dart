@@ -41,7 +41,7 @@ class _TodoAddScreenWidgetState extends State<TodoAddScreenWidget> {
             await Navigator.push(
               context,
               PageTransition(
-                type: PageTransitionType.fade,
+                type: PageTransitionType.topToBottom,
                 duration: Duration(milliseconds: 100),
                 reverseDuration: Duration(milliseconds: 100),
                 child: LoggedInPageWidget(),
@@ -92,8 +92,11 @@ class _TodoAddScreenWidgetState extends State<TodoAddScreenWidget> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Align(
             alignment: AlignmentDirectional(0.1, 0),
-            child: StreamBuilder<List<TodosRecord>>(
-              stream: queryTodosRecord(),
+            child: StreamBuilder<List<TodoRecord>>(
+              stream: queryTodoRecord(
+                queryBuilder: (todoRecord) =>
+                    todoRecord.orderBy('date', descending: true),
+              ),
               builder: (context, snapshot) {
                 // Customize what your widget looks like when it's loading.
                 if (!snapshot.hasData) {
@@ -108,47 +111,116 @@ class _TodoAddScreenWidgetState extends State<TodoAddScreenWidget> {
                     ),
                   );
                 }
-                List<TodosRecord> listViewTodosRecordList = snapshot.data;
+                List<TodoRecord> listViewTodoRecordList = snapshot.data;
                 return ListView.builder(
                   padding: EdgeInsets.zero,
                   scrollDirection: Axis.vertical,
-                  itemCount: listViewTodosRecordList.length,
+                  itemCount: listViewTodoRecordList.length,
                   itemBuilder: (context, listViewIndex) {
-                    final listViewTodosRecord =
-                        listViewTodosRecordList[listViewIndex];
+                    final listViewTodoRecord =
+                        listViewTodoRecordList[listViewIndex];
                     return Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: InkWell(
                         onTap: () async {
                           await Navigator.push(
                             context,
                             PageTransition(
-                              type: PageTransitionType.topToBottom,
-                              duration: Duration(milliseconds: 100),
-                              reverseDuration: Duration(milliseconds: 100),
-                              child: UpdatingScreenWidget(),
+                              type: PageTransitionType.leftToRight,
+                              duration: Duration(milliseconds: 200),
+                              reverseDuration: Duration(milliseconds: 200),
+                              child: UpdatingScreenWidget(
+                                title1: listViewTodoRecord.title,
+                                descreption1: listViewTodoRecord.descreption,
+                                date1: listViewTodoRecord.date,
+                              ),
                             ),
                           );
                         },
-                        child: ListTile(
-                          title: Text(
-                            listViewTodosRecord.title,
-                            style: FlutterFlowTheme.of(context).title3.override(
-                                  fontFamily: 'Poppins',
-                                  color: Color(0xFF151515),
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFD0F992),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 0.1,
+                                color: Color(0xFF272727),
+                                offset: Offset(1, 1),
+                                spreadRadius: 1,
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(10),
+                            shape: BoxShape.rectangle,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 0, 10, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        listViewTodoRecord.title,
+                                        style:
+                                            FlutterFlowTheme.of(context).title1,
+                                      ),
+                                      InkWell(
+                                        onTap: () async {
+                                          await listViewTodoRecord.reference
+                                              .delete();
+                                        },
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: Colors.black,
+                                          size: 24,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 5, 0, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            1, 0, 0, 0),
+                                        child: Text(
+                                          listViewTodoRecord.descreption,
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 10, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        dateTimeFormat('MMMMEEEEd',
+                                            listViewTodoRecord.date),
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          subtitle: Text(
-                            listViewTodosRecord.description,
-                            style: FlutterFlowTheme.of(context).subtitle2,
-                          ),
-                          trailing: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Color(0xFF303030),
-                            size: 20,
-                          ),
-                          tileColor: Color(0xFFEEE6E6),
-                          dense: false,
                         ),
                       ),
                     );
